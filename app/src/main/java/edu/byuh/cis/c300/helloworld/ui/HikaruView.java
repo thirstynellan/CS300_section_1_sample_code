@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.view.View;
+import android.widget.Toast;
 
 import edu.byuh.cis.c300.helloworld.sprites.Duck;
 
@@ -14,6 +15,7 @@ public class HikaruView extends View {
     //private Bitmap duckImg;
     private Duck kanaan;
     private boolean initialized;
+    private Toast toasty;
 
     public HikaruView(Context k) {
         super(k);
@@ -23,7 +25,6 @@ public class HikaruView extends View {
         grace.setStyle(Paint.Style.STROKE);
         grace.setTextSize(100);
         grace.setTextAlign(Paint.Align.CENTER);
-        //duckImg = BitmapFactory.decodeResource(getResources(), R.drawable.duck);
     }
 
     @Override
@@ -46,5 +47,23 @@ public class HikaruView extends View {
         c.drawText("Hello CS300", w*0.5f, h*0.5f, grace);
         //c.drawBitmap(duckImg, w*0.4f, h*0.6f, grace);
         kanaan.draw(c);
+        toasty = Toast.makeText(getContext(),
+                "CS300 is my favorite class",
+                Toast.LENGTH_LONG);
+        toasty.show();
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

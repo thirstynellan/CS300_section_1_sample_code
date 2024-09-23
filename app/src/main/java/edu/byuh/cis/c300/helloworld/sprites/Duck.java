@@ -9,7 +9,7 @@ import android.graphics.RectF;
 import edu.byuh.cis.c300.helloworld.R;
 
 public class Duck {
-    private Bitmap img;
+    protected Bitmap img;
     private RectF bounds;
 
     public Duck(Resources res, float w) {
