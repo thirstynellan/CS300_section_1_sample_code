@@ -1,7 +1,6 @@
 package edu.byuh.cis.c300.helloworld;
 
 import android.os.Bundle;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import edu.byuh.cis.c300.helloworld.ui.HikaruView;
