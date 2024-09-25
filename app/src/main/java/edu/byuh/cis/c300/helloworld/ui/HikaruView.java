@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
@@ -47,10 +49,22 @@ public class HikaruView extends View {
         c.drawText("Hello CS300", w*0.5f, h*0.5f, grace);
         //c.drawBitmap(duckImg, w*0.4f, h*0.6f, grace);
         kanaan.draw(c);
-        toasty = Toast.makeText(getContext(),
-                "CS300 is my favorite class",
-                Toast.LENGTH_LONG);
-        toasty.show();
+            /*toasty = Toast.makeText(getContext(),
+                    "CS300 is my favorite class",
+                    Toast.LENGTH_LONG);
+            toasty.show();*/
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent m) {
+        if (m.getAction() == MotionEvent.ACTION_DOWN) {
+            float x = m.getX();
+            float y = m.getY();
+            Log.d("CS300", "VIEW: you just tapped the screen at (" + x + "," + y + ")");
+        }
+        //true means "we handled the event. It's done now."
+        //false means "pass the event on to the next object in the CoR
+        return true;
     }
 }
 
