@@ -9,14 +9,20 @@ import android.graphics.RectF;
 import edu.byuh.cis.c300.helloworld.R;
 
 public class Duck {
-    protected Bitmap img;
+    private Bitmap img;
+    private Bitmap leftDuck, rightDuck;
+    private boolean inverted;
     private RectF bounds;
 
     public Duck(Resources res, float w) {
         int duckSize = (int)(w*0.25);
-        img = BitmapFactory.decodeResource(res, R.drawable.duck);
+        leftDuck = BitmapFactory.decodeResource(res, R.drawable.duck);
         bounds = new RectF(0, 0, duckSize, duckSize);
-        img = Bitmap.createScaledBitmap(img, duckSize, duckSize, true);
+        leftDuck = Bitmap.createScaledBitmap(leftDuck, duckSize, duckSize, true);
+        rightDuck = BitmapFactory.decodeResource(res, R.drawable.duck2);
+        rightDuck = Bitmap.createScaledBitmap(rightDuck, duckSize, duckSize, true);
+        img = leftDuck;
+        inverted = false;
     }
 
     public void setLocation(float x, float y) {
@@ -24,6 +30,37 @@ public class Duck {
     }
 
     public void draw(Canvas c) {
-        c.drawBitmap(img, bounds.left, bounds.right, null);
+        c.drawBitmap(img, bounds.left, bounds.top, null);
     }
+
+    public boolean contains(float x, float y) {
+//        if (bounds.contains(x,y)) {
+//            return true;
+//        } else {
+//            return false;
+//        }
+        return bounds.contains(x,y);
+    }
+
+    public void respondToTap() {
+        if (inverted) {
+            img = leftDuck;
+            inverted = false;
+        } else {
+            img = rightDuck;
+            inverted = true;
+        }
+    }
+
+    public void dance() {
+        //tODO fix this bug on Monday
+        float dx = (float)(Math.random()*10);
+        float dy = (float)(Math.random()*10);
+        bounds.offset(dx, dy);
+    }
+
 }
+
+
+
+

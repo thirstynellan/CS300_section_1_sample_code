@@ -60,7 +60,13 @@ public class HikaruView extends View {
         if (m.getAction() == MotionEvent.ACTION_DOWN) {
             float x = m.getX();
             float y = m.getY();
-            Log.d("CS300", "VIEW: you just tapped the screen at (" + x + "," + y + ")");
+            if (kanaan.contains(x,y)) {
+                Log.d("CS300", "VIEW: you just tapped the duck!");
+                kanaan.respondToTap();
+                invalidate();
+            } else {
+                Log.d("CS300", "You missed the duck!");
+            }
         }
         //true means "we handled the event. It's done now."
         //false means "pass the event on to the next object in the CoR
