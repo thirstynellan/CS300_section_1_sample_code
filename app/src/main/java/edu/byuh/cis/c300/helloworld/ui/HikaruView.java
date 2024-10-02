@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -18,6 +20,20 @@ public class HikaruView extends View {
     private Duck kanaan;
     private boolean initialized;
     private Toast toasty;
+    private Timer tim;
+
+    public class Timer extends Handler {
+        public Timer() {
+            sendMessageDelayed(obtainMessage(), 100);
+        }
+
+        @Override
+        public void handleMessage(Message m) {
+            kanaan.dance();
+            invalidate();
+            sendMessageDelayed(obtainMessage(), 100);
+        }
+    }
 
     public HikaruView(Context k) {
         super(k);
@@ -42,6 +58,7 @@ public class HikaruView extends View {
             kanaan = new Duck(getResources(), w);
             kanaan.setLocation(w*0.4f, h*0.6f);
             grace.setStrokeWidth(w * 0.01f);
+            tim = new Timer();
             initialized = true;
         }
         c.drawRect(rectLeft, rectTop, rectRight, rectBottom, grace);

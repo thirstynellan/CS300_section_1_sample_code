@@ -53,9 +53,8 @@ public class Duck {
     }
 
     public void dance() {
-        //tODO fix this bug on Monday
-        float dx = (float)(Math.random()*10);
-        float dy = (float)(Math.random()*10);
+        float dx = (float)(Math.random()*10)-5;
+        float dy = (float)(Math.random()*10)-5;
         bounds.offset(dx, dy);
     }
 
