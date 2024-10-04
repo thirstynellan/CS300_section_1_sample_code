@@ -6,9 +6,10 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.RectF;
 
+import edu.byuh.cis.c300.helloworld.Observer;
 import edu.byuh.cis.c300.helloworld.R;
 
-public class Duck {
+public class Duck implements Observer {
     private Bitmap img;
     private Bitmap leftDuck, rightDuck;
     private boolean inverted;
@@ -52,12 +53,16 @@ public class Duck {
         }
     }
 
-    public void dance() {
+    private void dance() {
         float dx = (float)(Math.random()*10)-5;
         float dy = (float)(Math.random()*10)-5;
         bounds.offset(dx, dy);
     }
 
+    @Override
+    public void update() {
+        dance();
+    }
 }
 
 

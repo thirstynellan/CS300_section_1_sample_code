@@ -11,29 +11,18 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
+import edu.byuh.cis.c300.helloworld.Observer;
+import edu.byuh.cis.c300.helloworld.Timer;
 import edu.byuh.cis.c300.helloworld.sprites.Duck;
 
-public class HikaruView extends View {
+
+public class HikaruView extends View implements Observer {
 
     private Paint grace;
-    //private Bitmap duckImg;
     private Duck kanaan;
     private boolean initialized;
     private Toast toasty;
     private Timer tim;
-
-    public class Timer extends Handler {
-        public Timer() {
-            sendMessageDelayed(obtainMessage(), 100);
-        }
-
-        @Override
-        public void handleMessage(Message m) {
-            kanaan.dance();
-            invalidate();
-            sendMessageDelayed(obtainMessage(), 100);
-        }
-    }
 
     public HikaruView(Context k) {
         super(k);
@@ -59,6 +48,8 @@ public class HikaruView extends View {
             kanaan.setLocation(w*0.4f, h*0.6f);
             grace.setStrokeWidth(w * 0.01f);
             tim = new Timer();
+            tim.subscribe(kanaan);
+            tim.subscribe(this);
             initialized = true;
         }
         c.drawRect(rectLeft, rectTop, rectRight, rectBottom, grace);
@@ -88,6 +79,11 @@ public class HikaruView extends View {
         //true means "we handled the event. It's done now."
         //false means "pass the event on to the next object in the CoR
         return true;
+    }
+
+    @Override
+    public void update() {
+        invalidate();
     }
 }
 
