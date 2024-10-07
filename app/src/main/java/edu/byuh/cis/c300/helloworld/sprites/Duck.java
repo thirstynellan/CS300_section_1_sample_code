@@ -4,6 +4,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.graphics.RectF;
 
 import edu.byuh.cis.c300.helloworld.Observer;
@@ -14,6 +15,8 @@ public class Duck implements Observer {
     private Bitmap leftDuck, rightDuck;
     private boolean inverted;
     private RectF bounds;
+    private int id;
+    private static int counter = 1;
 
     public Duck(Resources res, float w) {
         int duckSize = (int)(w*0.25);
@@ -23,6 +26,8 @@ public class Duck implements Observer {
         rightDuck = BitmapFactory.decodeResource(res, R.drawable.duck2);
         rightDuck = Bitmap.createScaledBitmap(rightDuck, duckSize, duckSize, true);
         img = leftDuck;
+        id = counter;
+        counter++;
         inverted = false;
     }
 
@@ -30,8 +35,9 @@ public class Duck implements Observer {
         bounds.offsetTo(x,y);
     }
 
-    public void draw(Canvas c) {
+    public void draw(Canvas c, Paint p) {
         c.drawBitmap(img, bounds.left, bounds.top, null);
+        c.drawText(""+id, bounds.centerX(), bounds.bottom, p);
     }
 
     public boolean contains(float x, float y) {

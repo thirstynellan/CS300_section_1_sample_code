@@ -11,6 +11,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import edu.byuh.cis.c300.helloworld.Observer;
 import edu.byuh.cis.c300.helloworld.Timer;
 import edu.byuh.cis.c300.helloworld.sprites.Duck;
@@ -19,7 +22,8 @@ import edu.byuh.cis.c300.helloworld.sprites.Duck;
 public class HikaruView extends View implements Observer {
 
     private Paint grace;
-    private Duck kanaan;
+    //private Duck kanaan;
+    private List<Duck> flock;
     private boolean initialized;
     private Toast toasty;
     private Timer tim;
@@ -27,8 +31,10 @@ public class HikaruView extends View implements Observer {
     public HikaruView(Context k) {
         super(k);
         initialized = false;
+        flock = new ArrayList<>();
         grace = new Paint();
-        grace.setColor(Color.rgb(255,200,200));
+        //grace.setColor(Color.rgb(255,200,200));
+        grace.setColor(Color.BLUE);
         grace.setStyle(Paint.Style.STROKE);
         grace.setTextSize(100);
         grace.setTextAlign(Paint.Align.CENTER);
@@ -44,11 +50,16 @@ public class HikaruView extends View implements Observer {
         float rectTop = h * 0.2f;
         float rectBottom = h * 0.4f;
         if (!initialized) {
-            kanaan = new Duck(getResources(), w);
-            kanaan.setLocation(w*0.4f, h*0.6f);
-            grace.setStrokeWidth(w * 0.01f);
             tim = new Timer();
-            tim.subscribe(kanaan);
+            for (int i=0; i<70; i++) {
+                Duck kanaan = new Duck(getResources(), w);
+                float duckX = (float) (w * 0.75 * Math.random());
+                float duckY = (float) (h * 0.75 * Math.random());
+                kanaan.setLocation(duckX, duckY);
+                tim.subscribe(kanaan);
+                flock.add(kanaan);
+            }
+            grace.setStrokeWidth(w * 0.01f);
             tim.subscribe(this);
             initialized = true;
         }
@@ -56,7 +67,9 @@ public class HikaruView extends View implements Observer {
         c.drawLine(w*0.5f, h*0.3f, w*0.8f, h*0.9f, grace);
         c.drawText("Hello CS300", w*0.5f, h*0.5f, grace);
         //c.drawBitmap(duckImg, w*0.4f, h*0.6f, grace);
-        kanaan.draw(c);
+        for (var d : flock) {
+            d.draw(c, grace);
+        }
             /*toasty = Toast.makeText(getContext(),
                     "CS300 is my favorite class",
                     Toast.LENGTH_LONG);
@@ -68,14 +81,15 @@ public class HikaruView extends View implements Observer {
         if (m.getAction() == MotionEvent.ACTION_DOWN) {
             float x = m.getX();
             float y = m.getY();
-            if (kanaan.contains(x,y)) {
-                Log.d("CS300", "VIEW: you just tapped the duck!");
-                kanaan.respondToTap();
-                invalidate();
-            } else {
-                Log.d("CS300", "You missed the duck!");
+            List<Duck> doomed = new ArrayList<>();
+            for (var d : flock) {
+                if (d.contains(x, y)) {
+                    doomed.add(d);
+                }
             }
+            flock.removeAll(doomed);
         }
+        //invalidate();
         //true means "we handled the event. It's done now."
         //false means "pass the event on to the next object in the CoR
         return true;
