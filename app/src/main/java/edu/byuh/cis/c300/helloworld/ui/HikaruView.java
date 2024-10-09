@@ -1,6 +1,8 @@
 package edu.byuh.cis.c300.helloworld.ui;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -27,6 +29,21 @@ public class HikaruView extends View implements Observer {
     private boolean initialized;
     private Toast toasty;
     private Timer tim;
+
+    private class HandleButtonClick implements DialogInterface.OnClickListener {
+
+        @Override
+        public void onClick(DialogInterface dialogInterface, int i) {
+            for (int j=0; j<70; j++) {
+                Duck kanaan = new Duck(getResources(), getWidth());
+                float duckX = (float) (getWidth() * 0.75 * Math.random());
+                float duckY = (float) (getHeight() * 0.75 * Math.random());
+                kanaan.setLocation(duckX, duckY);
+                tim.subscribe(kanaan);
+                flock.add(kanaan);
+            }
+        }
+    }
 
     public HikaruView(Context k) {
         super(k);
@@ -88,8 +105,17 @@ public class HikaruView extends View implements Observer {
                 }
             }
             flock.removeAll(doomed);
+            if (flock.isEmpty()) {
+                var andre = new HandleButtonClick();
+                AlertDialog.Builder ab = new AlertDialog.Builder(getContext());
+                ab.setTitle("Congratulations!");
+                ab.setMessage("You have successfully cleared the sector of the duck invasion! The federation is in need of a captain for a similar mission. Press OK to volunteer.");
+                ab.setCancelable(false);
+                ab.setNeutralButton("OK", andre);
+                AlertDialog box = ab.create();
+                box.show();
+            }
         }
-        //invalidate();
         //true means "we handled the event. It's done now."
         //false means "pass the event on to the next object in the CoR
         return true;
