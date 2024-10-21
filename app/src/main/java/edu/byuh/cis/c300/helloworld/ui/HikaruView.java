@@ -30,21 +30,6 @@ public class HikaruView extends View implements Observer {
     private Toast toasty;
     private Timer tim;
 
-    private class HandleButtonClick implements DialogInterface.OnClickListener {
-
-        @Override
-        public void onClick(DialogInterface dialogInterface, int i) {
-            for (int j=0; j<70; j++) {
-                Duck kanaan = new Duck(getResources(), getWidth());
-                float duckX = (float) (getWidth() * 0.75 * Math.random());
-                float duckY = (float) (getHeight() * 0.75 * Math.random());
-                kanaan.setLocation(duckX, duckY);
-                tim.subscribe(kanaan);
-                flock.add(kanaan);
-            }
-        }
-    }
-
     public HikaruView(Context k) {
         super(k);
         initialized = false;
@@ -55,6 +40,17 @@ public class HikaruView extends View implements Observer {
         grace.setStyle(Paint.Style.STROKE);
         grace.setTextSize(100);
         grace.setTextAlign(Paint.Align.CENTER);
+    }
+
+    private void createDucks(int n) {
+        for (int j=0; j<n; j++) {
+            Duck kanaan = new Duck(getResources(), getWidth());
+            float duckX = (float) (getWidth() * 0.75 * Math.random());
+            float duckY = (float) (getHeight() * 0.75 * Math.random());
+            kanaan.setLocation(duckX, duckY);
+            tim.subscribe(kanaan);
+            flock.add(kanaan);
+        }
     }
 
     @Override
@@ -68,14 +64,7 @@ public class HikaruView extends View implements Observer {
         float rectBottom = h * 0.4f;
         if (!initialized) {
             tim = new Timer();
-            for (int i=0; i<70; i++) {
-                Duck kanaan = new Duck(getResources(), w);
-                float duckX = (float) (w * 0.75 * Math.random());
-                float duckY = (float) (h * 0.75 * Math.random());
-                kanaan.setLocation(duckX, duckY);
-                tim.subscribe(kanaan);
-                flock.add(kanaan);
-            }
+            createDucks(70);
             grace.setStrokeWidth(w * 0.01f);
             tim.subscribe(this);
             initialized = true;
@@ -102,10 +91,17 @@ public class HikaruView extends View implements Observer {
             for (var d : flock) {
                 if (d.contains(x, y)) {
                     doomed.add(d);
+                    tim.unsubscribe(d);
                 }
             }
             flock.removeAll(doomed);
             if (flock.isEmpty()) {
+                class HandleButtonClick implements DialogInterface.OnClickListener {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        createDucks(70);
+                    }
+                }
                 var andre = new HandleButtonClick();
                 AlertDialog.Builder ab = new AlertDialog.Builder(getContext());
                 ab.setTitle("Congratulations!");
