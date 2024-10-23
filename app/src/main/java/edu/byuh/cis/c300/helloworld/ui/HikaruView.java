@@ -96,18 +96,23 @@ public class HikaruView extends View implements Observer {
             }
             flock.removeAll(doomed);
             if (flock.isEmpty()) {
-                class HandleButtonClick implements DialogInterface.OnClickListener {
+                /*class HandleButtonClick implements DialogInterface.OnClickListener {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         createDucks(70);
                     }
                 }
-                var andre = new HandleButtonClick();
+                var andre = new HandleButtonClick();*/
                 AlertDialog.Builder ab = new AlertDialog.Builder(getContext());
                 ab.setTitle("Congratulations!");
                 ab.setMessage("You have successfully cleared the sector of the duck invasion! The federation is in need of a captain for a similar mission. Press OK to volunteer.");
                 ab.setCancelable(false);
-                ab.setNeutralButton("OK", andre);
+                ab.setNeutralButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface d, int i) {
+                        createDucks(70);
+                    }
+                });
                 AlertDialog box = ab.create();
                 box.show();
             }
