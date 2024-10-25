@@ -1,5 +1,6 @@
 package edu.byuh.cis.c300.helloworld.ui;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -96,21 +97,16 @@ public class HikaruView extends View implements Observer {
             }
             flock.removeAll(doomed);
             if (flock.isEmpty()) {
-                /*class HandleButtonClick implements DialogInterface.OnClickListener {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        createDucks(70);
-                    }
-                }
-                var andre = new HandleButtonClick();*/
                 AlertDialog.Builder ab = new AlertDialog.Builder(getContext());
                 ab.setTitle("Congratulations!");
-                ab.setMessage("You have successfully cleared the sector of the duck invasion! The federation is in need of a captain for a similar mission. Press OK to volunteer.");
+                ab.setMessage("You have successfully cleared the sector of the duck invasion! The federation is in need of a captain for a similar mission. Do you want to volunteer?");
                 ab.setCancelable(false);
-                ab.setNeutralButton("OK", new DialogInterface.OnClickListener() {
+                ab.setPositiveButton("Yes, play again.", (d, i) -> createDucks(70));
+                ab.setNegativeButton("No, I quit.", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface d, int i) {
-                        createDucks(70);
+                        //gross, but effective.
+                        ((Activity)getContext()).finish();
                     }
                 });
                 AlertDialog box = ab.create();
