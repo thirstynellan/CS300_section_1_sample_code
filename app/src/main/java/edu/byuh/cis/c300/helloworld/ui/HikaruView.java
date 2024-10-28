@@ -65,7 +65,7 @@ public class HikaruView extends View implements Observer {
         float rectBottom = h * 0.4f;
         if (!initialized) {
             tim = new Timer();
-            createDucks(70);
+            createDucks(10);
             grace.setStrokeWidth(w * 0.01f);
             tim.subscribe(this);
             initialized = true;
@@ -98,19 +98,20 @@ public class HikaruView extends View implements Observer {
             flock.removeAll(doomed);
             if (flock.isEmpty()) {
                 AlertDialog.Builder ab = new AlertDialog.Builder(getContext());
-                ab.setTitle("Congratulations!");
-                ab.setMessage("You have successfully cleared the sector of the duck invasion! The federation is in need of a captain for a similar mission. Do you want to volunteer?");
-                ab.setCancelable(false);
-                ab.setPositiveButton("Yes, play again.", (d, i) -> createDucks(70));
-                ab.setNegativeButton("No, I quit.", new DialogInterface.OnClickListener() {
+                ab.setTitle("Congratulations!")
+                  .setMessage("You have successfully cleared the sector of the duck invasion! The federation is in need of a captain for a similar mission. Do you want to volunteer?")
+                  .setCancelable(false)
+                  .setPositiveButton("Yes, play again.", (d, i) -> createDucks(10))
+                  .setNegativeButton("No, I quit.", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface d, int i) {
                         //gross, but effective.
                         ((Activity)getContext()).finish();
                     }
                 });
-                AlertDialog box = ab.create();
-                box.show();
+                //AlertDialog box = ab.create();
+                //box.show();
+                ab.create().show(); // method chaining
             }
         }
         //true means "we handled the event. It's done now."
@@ -120,6 +121,9 @@ public class HikaruView extends View implements Observer {
 
     @Override
     public void update() {
+        if (Math.random() < 0.1) {
+            post(() -> createDucks(1));
+        }
         invalidate();
     }
 }
