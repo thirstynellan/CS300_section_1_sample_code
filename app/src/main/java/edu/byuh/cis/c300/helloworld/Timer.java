@@ -5,6 +5,7 @@ import android.os.Message;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 public class Timer extends Handler implements Subject {
 
@@ -24,6 +25,15 @@ public class Timer extends Handler implements Subject {
     public void unsubscribe(Observer o) {
         fans.remove(o);
     }
+
+    public void bulkUnsubscribe(Predicate<Observer> doomed) {
+        fans.removeIf(doomed);
+    }
+
+    public void bulkUnsubscribe(List<Observer> doomed) {
+        fans.removeAll(doomed);
+    }
+
 
     @Override
     public void notifyObservers() {

@@ -16,6 +16,9 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import edu.byuh.cis.c300.helloworld.Observer;
 import edu.byuh.cis.c300.helloworld.Timer;
@@ -73,10 +76,17 @@ public class HikaruView extends View implements Observer {
         c.drawRect(rectLeft, rectTop, rectRight, rectBottom, grace);
         c.drawLine(w*0.5f, h*0.3f, w*0.8f, h*0.9f, grace);
         c.drawText("Hello CS300", w*0.5f, h*0.5f, grace);
-        //c.drawBitmap(duckImg, w*0.4f, h*0.6f, grace);
-        for (var d : flock) {
-            d.draw(c, grace);
-        }
+//        class Japeth implements Consumer<Duck> {
+//            @Override
+//            public void accept(Duck d) {
+//                d.draw(c, grace);
+//            }
+//        }
+//        var j = new Japeth();
+        flock.forEach(d -> d.draw(c, grace));
+        //for (var d : flock) {
+        //    d.draw(c, grace);
+        //}
             /*toasty = Toast.makeText(getContext(),
                     "CS300 is my favorite class",
                     Toast.LENGTH_LONG);
@@ -88,14 +98,25 @@ public class HikaruView extends View implements Observer {
         if (m.getAction() == MotionEvent.ACTION_DOWN) {
             float x = m.getX();
             float y = m.getY();
-            List<Duck> doomed = new ArrayList<>();
-            for (var d : flock) {
-                if (d.contains(x, y)) {
-                    doomed.add(d);
-                    tim.unsubscribe(d);
-                }
-            }
-            flock.removeAll(doomed);
+//            class Andre implements Predicate<Duck> {
+//
+//                @Override
+//                public boolean test(Duck d) {
+//                    return d.contains(x,y);
+//                }
+//            }
+//            var a = new Andre();
+            flock.removeIf(d -> d.contains(x,y));
+            flock.stream().filter(d -> d.contains(x,y)).forEach(d -> tim.unsubscribe(d));
+            //flock.stream().filter(d -> d.contains(x,y)).collect(Collectors.toCollection());
+//            List<Duck> doomed = new ArrayList<>();
+//            for (var d : flock) {
+//                if (d.contains(x, y)) {
+//                    doomed.add(d);
+//                    tim.unsubscribe(d);
+//                }
+//            }
+//            flock.removeAll(doomed);
             if (flock.isEmpty()) {
                 AlertDialog.Builder ab = new AlertDialog.Builder(getContext());
                 ab.setTitle("Congratulations!")
