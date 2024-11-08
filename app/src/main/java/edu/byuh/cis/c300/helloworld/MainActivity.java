@@ -19,6 +19,20 @@ public class MainActivity extends AppCompatActivity {
         setContentView(hv);
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        //pause the soundtrack
+        hv.pauseMusic();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        //continue the soundtrack
+        hv.resumeMusic();
+    }
+
 //    @Override
 //    public boolean onTouchEvent(MotionEvent m) {
 //        if (m.getAction() == MotionEvent.ACTION_DOWN) {

@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.media.MediaPlayer;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -21,6 +22,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import edu.byuh.cis.c300.helloworld.Observer;
+import edu.byuh.cis.c300.helloworld.R;
 import edu.byuh.cis.c300.helloworld.Timer;
 import edu.byuh.cis.c300.helloworld.sprites.Duck;
 
@@ -33,6 +35,7 @@ public class HikaruView extends View implements Observer {
     private boolean initialized;
     private Toast toasty;
     private Timer tim;
+    private MediaPlayer music;
 
     public HikaruView(Context k) {
         super(k);
@@ -44,6 +47,17 @@ public class HikaruView extends View implements Observer {
         grace.setStyle(Paint.Style.STROKE);
         grace.setTextSize(100);
         grace.setTextAlign(Paint.Align.CENTER);
+        music = MediaPlayer.create(getContext(), R.raw.zhaytee_microcomposer_1);
+        music.setLooping(true);
+        music.start();
+    }
+
+    public void pauseMusic() {
+        music.pause();
+    }
+
+    public void resumeMusic() {
+        music.start();
     }
 
     private void createDucks(int n) {
