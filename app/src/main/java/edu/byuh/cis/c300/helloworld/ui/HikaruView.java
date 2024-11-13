@@ -30,7 +30,6 @@ import edu.byuh.cis.c300.helloworld.sprites.Duck;
 public class HikaruView extends View implements Observer {
 
     private Paint grace;
-    //private Duck kanaan;
     private List<Duck> flock;
     private boolean initialized;
     private Toast toasty;
