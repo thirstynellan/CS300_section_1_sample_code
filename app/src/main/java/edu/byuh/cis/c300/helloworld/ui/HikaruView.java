@@ -15,6 +15,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.preference.PreferenceManager;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
@@ -22,6 +24,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import edu.byuh.cis.c300.helloworld.Observer;
+import edu.byuh.cis.c300.helloworld.Prefs;
 import edu.byuh.cis.c300.helloworld.R;
 import edu.byuh.cis.c300.helloworld.Timer;
 import edu.byuh.cis.c300.helloworld.sprites.Duck;
@@ -35,10 +38,12 @@ public class HikaruView extends View implements Observer {
     private Toast toasty;
     private Timer tim;
     private MediaPlayer music;
+    private boolean duckDir;
 
-    public HikaruView(Context k) {
+    public HikaruView(Context k, boolean dd) {
         super(k);
         initialized = false;
+        duckDir = dd;
         flock = new ArrayList<>();
         grace = new Paint();
         //grace.setColor(Color.rgb(255,200,200));
@@ -48,20 +53,26 @@ public class HikaruView extends View implements Observer {
         grace.setTextAlign(Paint.Align.CENTER);
         music = MediaPlayer.create(getContext(), R.raw.zhaytee_microcomposer_1);
         music.setLooping(true);
-        music.start();
+        if (Prefs.getMusicPref(k)) {
+            music.start();
+        }
     }
 
     public void pauseMusic() {
-        music.pause();
+        if (Prefs.getMusicPref(getContext())) {
+            music.pause();
+        }
     }
 
     public void resumeMusic() {
-        music.start();
+        if (Prefs.getMusicPref(getContext())) {
+            music.start();
+        }
     }
 
     private void createDucks(int n) {
         for (int j=0; j<n; j++) {
-            Duck kanaan = new Duck(getResources(), getWidth());
+            Duck kanaan = new Duck(getResources(), getWidth(), duckDir);
             float duckX = (float) (getWidth() * 0.75 * Math.random());
             float duckY = (float) (getHeight() * 0.75 * Math.random());
             kanaan.setLocation(duckX, duckY);

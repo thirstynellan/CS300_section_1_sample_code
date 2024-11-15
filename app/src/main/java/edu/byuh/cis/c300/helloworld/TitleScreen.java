@@ -32,14 +32,19 @@ public class TitleScreen extends AppCompatActivity {
                     //TODO open the "about box"
                 } else {
                     //TODO open the "settings"
+                    Intent japeth = new Intent(this, Prefs.class);
+                    startActivity(japeth);
                 }
             } else if (y > 2 * h / 3) {
                 //launch main activity
                 Intent rosa = new Intent(this, MainActivity.class);
                 if (x < w/2) {
                     //TODO right-facing ducks
+                    rosa.putExtra("DUCK_DIR", false);
+
                 } else {
                     //TODO left-facing ducks
+                    rosa.putExtra("DUCK_DIR", true);
                 }
                 startActivity(rosa);
                 finish();

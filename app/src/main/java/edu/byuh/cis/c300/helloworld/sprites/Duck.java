@@ -18,14 +18,19 @@ public class Duck implements Observer {
     private int id;
     private static int counter = 1;
 
-    public Duck(Resources res, float w) {
+    public Duck(Resources res, float w, boolean duckDir) {
         int duckSize = (int)(w*0.25);
         leftDuck = BitmapFactory.decodeResource(res, R.drawable.duck);
         bounds = new RectF(0, 0, duckSize, duckSize);
         leftDuck = Bitmap.createScaledBitmap(leftDuck, duckSize, duckSize, true);
         rightDuck = BitmapFactory.decodeResource(res, R.drawable.duck2);
         rightDuck = Bitmap.createScaledBitmap(rightDuck, duckSize, duckSize, true);
-        img = leftDuck;
+        /*if (duckDir == true) {
+            img = leftDuck;
+        } else {
+            img = rightDuck;
+        }*/
+        img = duckDir ? leftDuck : rightDuck;
         id = counter;
         counter++;
         inverted = false;
