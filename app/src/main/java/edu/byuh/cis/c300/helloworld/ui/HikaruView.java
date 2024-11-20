@@ -13,8 +13,10 @@ import android.os.Message;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.preference.PreferenceManager;
 
 import java.util.ArrayList;
@@ -30,7 +32,7 @@ import edu.byuh.cis.c300.helloworld.Timer;
 import edu.byuh.cis.c300.helloworld.sprites.Duck;
 
 
-public class HikaruView extends View implements Observer {
+public class HikaruView extends AppCompatImageView implements Observer {
 
     private Paint grace;
     private List<Duck> flock;
@@ -56,6 +58,8 @@ public class HikaruView extends View implements Observer {
         if (Prefs.getMusicPref(k)) {
             music.start();
         }
+        setImageResource(R.drawable.bkgd2);
+        setScaleType(ScaleType.FIT_XY);
     }
 
     public void pauseMusic() {
@@ -71,11 +75,13 @@ public class HikaruView extends View implements Observer {
     }
 
     private void createDucks(int n) {
+        final int duckSpeed = Prefs.getSpeedPref(getContext());
         for (int j=0; j<n; j++) {
             Duck kanaan = new Duck(getResources(), getWidth(), duckDir);
             float duckX = (float) (getWidth() * 0.75 * Math.random());
             float duckY = (float) (getHeight() * 0.75 * Math.random());
             kanaan.setLocation(duckX, duckY);
+            kanaan.setDanceSpeed(duckSpeed);
             tim.subscribe(kanaan);
             flock.add(kanaan);
         }
@@ -83,7 +89,8 @@ public class HikaruView extends View implements Observer {
 
     @Override
     public void onDraw(Canvas c) {
-        c.drawColor(Color.GREEN);
+        super.onDraw(c);
+        //c.drawColor(Color.GREEN);
         float w = getWidth();
         float h = getHeight();
         float rectLeft = w * 0.25f;
@@ -97,9 +104,9 @@ public class HikaruView extends View implements Observer {
             tim.subscribe(this);
             initialized = true;
         }
-        c.drawRect(rectLeft, rectTop, rectRight, rectBottom, grace);
-        c.drawLine(w*0.5f, h*0.3f, w*0.8f, h*0.9f, grace);
-        c.drawText("Hello CS300", w*0.5f, h*0.5f, grace);
+        //c.drawRect(rectLeft, rectTop, rectRight, rectBottom, grace);
+        //c.drawLine(w*0.5f, h*0.3f, w*0.8f, h*0.9f, grace);
+        //c.drawText("Hello CS300", w*0.5f, h*0.5f, grace);
 //        class Japeth implements Consumer<Duck> {
 //            @Override
 //            public void accept(Duck d) {

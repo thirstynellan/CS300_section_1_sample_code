@@ -15,6 +15,7 @@ public class Duck implements Observer {
     private Bitmap leftDuck, rightDuck;
     private boolean inverted;
     private RectF bounds;
+    private int danceSpeed = 10;
     private int id;
     private static int counter = 1;
 
@@ -34,6 +35,10 @@ public class Duck implements Observer {
         id = counter;
         counter++;
         inverted = false;
+    }
+
+    public void setDanceSpeed(int s) {
+        danceSpeed = s;
     }
 
     public void setLocation(float x, float y) {
@@ -65,8 +70,8 @@ public class Duck implements Observer {
     }
 
     private void dance() {
-        float dx = (float)(Math.random()*10)-5;
-        float dy = (float)(Math.random()*10)-5;
+        float dx = (float)(Math.random()*danceSpeed)-danceSpeed/2;
+        float dy = (float)(Math.random()*danceSpeed)-danceSpeed/2;
         bounds.offset(dx, dy);
     }
 
