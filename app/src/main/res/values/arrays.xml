@@ -1,4 +1,9 @@
 <resources>
+    <string-array name="speed_entries">
+        <item>Fast</item>
+        <item>Medium</item>
+        <item>Slow</item>
+    </string-array>
     <!-- Reply Preference -->
     <string-array name="reply_entries">
         <item>Reply</item>

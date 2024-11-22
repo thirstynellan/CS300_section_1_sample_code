@@ -1,6 +1,13 @@
 <resources>
-    <string name="app_name">C300 is my favorite class</string>
+    <string name="app_name">Duck World</string>
     <string name="title_activity_prefs">Prefs</string>
+    <string name="endgame_title">Congratulations!</string>
+    <string name="endgame_message">You have successfully cleared the sector of the duck invasion! The federation is in need of a captain for a similar mission. Do you want to volunteer?</string>
+    <string name="play_again">Yes, play again.</string>
+    <string name="quit">No, I quit.</string>
+    <string name="speed_pref_title">Speed</string>
+    <string name="speed_pref_sum">How fast do the ducks dance?</string>
+    <string name="aloha">Aloha CS300</string>
 
     <!-- Preference Titles -->
     <string name="messages_header">Messages</string>

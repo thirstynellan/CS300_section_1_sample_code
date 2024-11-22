@@ -106,7 +106,8 @@ public class HikaruView extends AppCompatImageView implements Observer {
         }
         //c.drawRect(rectLeft, rectTop, rectRight, rectBottom, grace);
         //c.drawLine(w*0.5f, h*0.3f, w*0.8f, h*0.9f, grace);
-        //c.drawText("Hello CS300", w*0.5f, h*0.5f, grace);
+        String greeting = getResources().getString(R.string.aloha);
+        c.drawText(greeting, w*0.5f, h*0.5f, grace);
 //        class Japeth implements Consumer<Duck> {
 //            @Override
 //            public void accept(Duck d) {
@@ -118,10 +119,10 @@ public class HikaruView extends AppCompatImageView implements Observer {
         //for (var d : flock) {
         //    d.draw(c, grace);
         //}
-            /*toasty = Toast.makeText(getContext(),
-                    "CS300 is my favorite class",
+            toasty = Toast.makeText(getContext(),
+                    R.string.app_name,
                     Toast.LENGTH_LONG);
-            toasty.show();*/
+            toasty.show();
     }
 
     @Override
@@ -150,11 +151,11 @@ public class HikaruView extends AppCompatImageView implements Observer {
 //            flock.removeAll(doomed);
             if (flock.isEmpty()) {
                 AlertDialog.Builder ab = new AlertDialog.Builder(getContext());
-                ab.setTitle("Congratulations!")
-                  .setMessage("You have successfully cleared the sector of the duck invasion! The federation is in need of a captain for a similar mission. Do you want to volunteer?")
+                ab.setTitle(R.string.endgame_title)
+                  .setMessage(R.string.endgame_message)
                   .setCancelable(false)
-                  .setPositiveButton("Yes, play again.", (d, i) -> createDucks(10))
-                  .setNegativeButton("No, I quit.", new DialogInterface.OnClickListener() {
+                  .setPositiveButton(R.string.play_again, (d, i) -> createDucks(10))
+                  .setNegativeButton(R.string.quit, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface d, int i) {
                         //gross, but effective.

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.MotionEvent;
 import android.widget.ImageView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class TitleScreen extends AppCompatActivity {
@@ -29,7 +30,15 @@ public class TitleScreen extends AppCompatActivity {
             float y = m.getY();
             if (y < h / 3) {
                 if (x < w / 2) {
-                    //TODO open the "about box"
+                    //open the "about box"
+                    AlertDialog.Builder ab = new AlertDialog.Builder(this);
+                    ab.setTitle("About Duck World 3000")
+                            .setMessage("TODO something inspiring here")
+                            .setCancelable(true)
+                            .setNeutralButton("OK", null);
+                    AlertDialog box = ab.create();
+                    box.show();
+
                 } else {
                     //TODO open the "settings"
                     Intent japeth = new Intent(this, Prefs.class);
