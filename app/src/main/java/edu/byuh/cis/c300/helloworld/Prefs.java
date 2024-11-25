@@ -59,9 +59,9 @@ public class Prefs extends AppCompatActivity {
 
             //TODO add preference widgets here
             SwitchPreference music = new SwitchPreference(context);
-            music.setTitle("Music");
-            music.setSummaryOn("Background music will play");
-            music.setSummaryOff("Background music will NOT play");
+            music.setTitle(R.string.music_pref_title);
+            music.setSummaryOn(R.string.music_on);
+            music.setSummaryOff(R.string.music_off);
             music.setDefaultValue(false);
             music.setKey("MUSIC_PREF");
             screen.addPreference(music);
