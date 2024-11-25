@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">Le Monde des Canards</string>
+    <string name="title_activity_prefs">Paramètres</string>
+    <string name="endgame_title">Felicitations!</string>
+    <string name="endgame_message">Fin! Rejouer?</string>
+    <string name="play_again">Oui</string>
+    <string name="quit">Non</string>
+    <string name="speed_pref_title">Vitesse</string>
+    <string name="speed_pref_sum">A quelle vitesse les canards danseront-ils?</string>
+    <string name="aloha">Aloha CS300</string>
+    <string name="music_pref_title">Musique</string>
+    <string name="music_on">Musique à fond jouera</string>
+    <string name="music_off">Musique à fond ne jouera pas</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+</resources>
